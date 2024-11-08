@@ -14,7 +14,6 @@ const app = express();
 function getColor(req) {
   if (req.query.c) {
     if (validateHex(req.query.c)) {
-      console.log('query.c', `#${req.query.c}`);
       return `#${req.query.c}`;
     }
     const error = new Error('Invalid color parameter');
@@ -22,7 +21,6 @@ function getColor(req) {
     error.status = 422;
     throw error;
   }
-  console.log('idToColor', idToColor(req.params.id));
   return idToColor(req.params.id);
 }
 
@@ -47,9 +45,7 @@ app.get('/avatar/:id(\\w+)/:initials.:format(png|jpg)', (req, res, next) => {
   res.set('Content-Type', `image/${format}`);
   generateImage(imageSize, backgroundColor, color, font, text, format).stream((err, stdout) => {
     if (err) return next(err);
-    const result = stdout.pipe(res);
-    console.log('result', result);
-    return result;
+    return stdout.pipe(res);
   });
 });
 
