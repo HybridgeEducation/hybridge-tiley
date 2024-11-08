@@ -83,5 +83,27 @@ var self = {
     return result;
   },
 
+  hexToRgb(hex) {
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    const cleanHex = hex.replace('#', '');
+
+    if (hex.length === 3) {
+      // If RGB format
+      r = parseInt(cleanHex[0] + cleanHex[0], 16);
+      g = parseInt(cleanHex[1] + cleanHex[1], 16);
+      b = parseInt(cleanHex[2] + cleanHex[2], 16);
+    } else if (cleanHex.length === 6) {
+      // If RRGGBB format
+      r = parseInt(cleanHex.substr(0, 2), 16);
+      g = parseInt(cleanHex.substr(2, 2), 16);
+      b = parseInt(cleanHex.substr(4, 2), 16);
+    }
+
+    return { r, g, b };
+  },
+
 };
 module.exports = self;
